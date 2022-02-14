@@ -1,0 +1,825 @@
+@prefix : <git://github.com/gjvnq/soi.git/ontology.ttl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix soi: <git://github.com/gjvnq/soi.git/ontology.ttl#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <git://github.com/gjvnq/soi.git/ontology.ttl> .
+
+<git://github.com/gjvnq/soi.git/ontology.ttl> rdf:type owl:Ontology .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#recommended_values
+soi:recommended_values rdf:type owl:AnnotationProperty .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#regexp
+soi:regexp rdf:type owl:AnnotationProperty .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#usage
+soi:usage rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#broadIPA_type
+soi:broadIPA_type rdf:type rdfs:Datatype ;
+                  owl:equivalentClass [ rdf:type rdfs:Datatype ;
+                                        owl:onDatatype xsd:string ;
+                                        owl:withRestrictions ( [ xsd:pattern "/.*/"
+                                                               ]
+                                                             )
+                                      ] .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#digitality_type
+soi:digitality_type rdf:type rdfs:Datatype ;
+                    soi:recommended_values """digital
+analog
+mixed
+mostly-digital
+mostly-analog""" ;
+                    owl:equivalentClass xsd:string .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#generic_date_type
+soi:generic_date_type rdf:type rdfs:Datatype ;
+                      owl:equivalentClass [ rdf:type rdfs:Datatype ;
+                                            owl:unionOf ( soi:iso8601_type
+                                                          xsd:date
+                                                          xsd:dateTime
+                                                          xsd:dateTimeStamp
+                                                        )
+                                          ] .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hash_type
+soi:hash_type rdf:type rdfs:Datatype ;
+              owl:equivalentClass [ rdf:type rdfs:Datatype ;
+                                    owl:onDatatype xsd:string ;
+                                    owl:withRestrictions ( [ xsd:pattern "^([A-Z0-9a-z-]+:)?[0-9a-f]+$"
+                                                           ]
+                                                         )
+                                  ] .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#iso8601_type
+soi:iso8601_type rdf:type rdfs:Datatype ;
+                 rdfs:comment """Examples of supported dates:
+
+2022-12-30
+2016-12-31T23:59:60+00:00
+20220-02-14T00:06:40+00:00
+20220-02-14T00:06:40+0000
+2022-02-14T00:06:40+25
+2022-02-14T00:06:40-45
+2022-02-14T00:06+25
+2022-02-14T00+25
+2022-02-14T00:06:40Z
+2022-W07T23:59:60+00:00
+2022-W07-1
+2022W071
+2022-045
+20220214T000640Z
+
+Examples of unsupported dates:
+
+--02-14
+---26
+--10
+2022-12-34
+2022-13-14"""@en ;
+                 owl:equivalentClass [ rdf:type rdfs:Datatype ;
+                                       owl:onDatatype xsd:string ;
+                                       owl:withRestrictions ( [ xsd:pattern "^([0-9]{4,5})-((0[0-9]|1[0-2])-([0-2][0-9]|3[0-1])|[0-9]{3}|W[0-9]{2}(-[0-6])?)(T([0-1][0-9]|2[0-3])(:([0-5][0-9])(:[0-5][0-9]|:60)?)?(Z|[+-][0-9]{2}(:[0-5][0-9])?))?$"
+                                                              ]
+                                                            )
+                                     ] .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#lang_bcp47
+soi:lang_bcp47 rdf:type rdfs:Datatype ;
+               owl:equivalentClass [ rdf:type rdfs:Datatype ;
+                                     owl:onDatatype xsd:string ;
+                                     owl:withRestrictions ( [ xsd:pattern "^(([A-Za-z]{2,3}(-[A-Za-z]{3}){0,3}|[A-Za-z]{4,8})(-[A-Za-z]{4})?(-[A-Za-z]{2}|-[0-9]{3})?(-[A-Za-z0-9]{5,8}|-[0-9][A-Za-z0-9]{3})*?(-[0-9A-Wa-wY-Zy-z](-[0-9A-Za-z]{2,8})+)*?(-x(-[0-9A-Za-z]{1,8})+)?|x-[0-9A-Za-z]{1,8}|i-ami|i-bnn|i-default|i-enochian|i-hak|i-klingon|i-lux|i-mingo|i-navajo|i-pwn|i-tao|i-tay|i-tsu|sgn-BE-FR|sgn-BE-NL|sgn-CH-DE|en-GB-oed)$"
+                                                            ]
+                                                          )
+                                   ] .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#lang_glottolog
+soi:lang_glottolog rdf:type rdfs:Datatype ;
+                   owl:equivalentClass [ rdf:type rdfs:Datatype ;
+                                         owl:onDatatype xsd:string ;
+                                         owl:withRestrictions ( [ xsd:pattern "[a-z0-9]{4}[0-9]{4}"
+                                                                ]
+                                                              )
+                                       ] .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#lang_type
+soi:lang_type rdf:type rdfs:Datatype ;
+              owl:equivalentClass [ rdf:type rdfs:Datatype ;
+                                    owl:unionOf ( soi:lang_bcp47
+                                                  soi:lang_glottolog
+                                                  xsd:language
+                                                )
+                                  ] .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#narrowIPA_type
+soi:narrowIPA_type rdf:type rdfs:Datatype ;
+                   owl:equivalentClass [ rdf:type rdfs:Datatype ;
+                                         owl:onDatatype xsd:string ;
+                                         owl:withRestrictions ( [ xsd:pattern "\\[.*\\]"
+                                                                ]
+                                                              )
+                                       ] .
+
+
+###  http://www.w3.org/2001/XMLSchema#date
+xsd:date rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#citesForCriticism
+soi:citesForCriticism rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf soi:citesWork ;
+                      owl:inverseOf soi:isCitedForCriticism .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#citesForMajorFact
+soi:citesForMajorFact rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf soi:citesWork ;
+                      owl:inverseOf soi:isCitedForMajorFact .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#citesForTrivia
+soi:citesForTrivia rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf soi:citesWork ;
+                   owl:inverseOf soi:isCitedForTrivia .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#citesWork
+soi:citesWork rdf:type owl:ObjectProperty ;
+              owl:inverseOf soi:isCitedBy ;
+              rdfs:domain soi:ArtWork ;
+              rdfs:range soi:ArtWork .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasAuthor
+soi:hasAuthor rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf owl:topObjectProperty ;
+              owl:inverseOf soi:isAuthorOf ;
+              rdfs:domain [ rdf:type owl:Class ;
+                            owl:unionOf ( soi:ArtWork
+                                          soi:Contribution
+                                        )
+                          ] ;
+              rdfs:range soi:Artist .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasCommonName
+soi:hasCommonName rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf soi:hasName ;
+                  owl:inverseOf soi:isCommonNameOf .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasContribution
+soi:hasContribution rdf:type owl:ObjectProperty ;
+                    owl:inverseOf soi:isContributionTo ;
+                    rdfs:domain soi:ArtWork ;
+                    rdfs:range soi:Contribution .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasContributor
+soi:hasContributor rdf:type owl:ObjectProperty ;
+                   rdfs:domain soi:Contribution ;
+                   rdfs:range soi:Artist .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasCopyrightHolder
+soi:hasCopyrightHolder rdf:type owl:ObjectProperty ;
+                       owl:inverseOf soi:isCopyrightHolder ;
+                       rdfs:domain soi:ArtWork ;
+                       rdfs:range soi:Artist .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasEdition
+soi:hasEdition rdf:type owl:ObjectProperty ;
+               owl:inverseOf soi:isEditionOf ;
+               rdfs:domain soi:WorkIdeal ;
+               rdfs:range soi:Edition .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasExemplar
+soi:hasExemplar rdf:type owl:ObjectProperty ;
+                owl:inverseOf soi:isExemplarOf ;
+                rdfs:domain soi:Edition ;
+                rdfs:range soi:Exemplar .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasFullName
+soi:hasFullName rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf soi:hasName ;
+                owl:inverseOf soi:isFullNameOf .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasMember
+soi:hasMember rdf:type owl:ObjectProperty ;
+              owl:inverseOf soi:isMemberOf ;
+              rdfs:domain soi:GroupArtist ;
+              rdfs:range soi:Artist .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasMoralrightsHolder
+soi:hasMoralrightsHolder rdf:type owl:ObjectProperty ;
+                         rdfs:domain soi:ArtWork ;
+                         rdfs:range soi:Artist .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasName
+soi:hasName rdf:type owl:ObjectProperty ;
+            owl:inverseOf soi:isNameOf ;
+            rdfs:domain soi:SoiEntity ;
+            rdfs:range soi:Name .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasPublisher
+soi:hasPublisher rdf:type owl:ObjectProperty ;
+                 owl:inverseOf soi:isPublisherOf ;
+                 rdfs:domain soi:Edition ;
+                 rdfs:range soi:Artist .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasShortName
+soi:hasShortName rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf soi:hasName ;
+                 owl:inverseOf soi:isShortNameOf .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasTranslationOf
+soi:hasTranslationOf rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf soi:hasVersion ;
+                     owl:inverseOf soi:isTranslationOf ;
+                     rdfs:domain soi:Edition ;
+                     rdfs:range soi:Edition .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasVersion
+soi:hasVersion rdf:type owl:ObjectProperty ;
+               owl:inverseOf soi:isVersionOf ;
+               rdfs:domain soi:ArtWork ;
+               rdfs:range soi:ArtWork .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#isAuthorOf
+soi:isAuthorOf rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf owl:topObjectProperty ;
+               rdfs:domain soi:Artist ;
+               rdfs:range [ rdf:type owl:Class ;
+                            owl:unionOf ( soi:ArtWork
+                                          soi:Contribution
+                                        )
+                          ] ;
+               rdfs:comment "Use only for \"primary\" authors such as movie directors, compilation editors, song composers and sole authors."@en .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#isCitedBy
+soi:isCitedBy rdf:type owl:ObjectProperty ;
+              rdfs:domain soi:ArtWork ;
+              rdfs:range soi:ArtWork .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#isCitedForCriticism
+soi:isCitedForCriticism rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf soi:isCitedBy .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#isCitedForMajorFact
+soi:isCitedForMajorFact rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf soi:isCitedBy .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#isCitedForTrivia
+soi:isCitedForTrivia rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf soi:isCitedBy .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#isCommonNameOf
+soi:isCommonNameOf rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf soi:isNameOf .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#isContributionTo
+soi:isContributionTo rdf:type owl:ObjectProperty ;
+                     rdfs:domain soi:Contribution ;
+                     rdfs:range soi:ArtWork .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#isContributorOf
+soi:isContributorOf rdf:type owl:ObjectProperty ;
+                    rdfs:domain soi:Artist ;
+                    rdfs:range soi:Contribution .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#isCopyrightHolder
+soi:isCopyrightHolder rdf:type owl:ObjectProperty ;
+                      rdfs:domain soi:Artist ;
+                      rdfs:range soi:ArtWork .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#isEditionOf
+soi:isEditionOf rdf:type owl:ObjectProperty ;
+                rdfs:domain soi:Edition ;
+                rdfs:range soi:WorkIdeal .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#isExemplarOf
+soi:isExemplarOf rdf:type owl:ObjectProperty ;
+                 rdfs:domain soi:Exemplar ;
+                 rdfs:range soi:Edition .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#isFullNameOf
+soi:isFullNameOf rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf soi:isNameOf .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#isMemberOf
+soi:isMemberOf rdf:type owl:ObjectProperty ;
+               rdfs:domain soi:Artist ;
+               rdfs:range soi:GroupArtist .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#isMoralrightsHolder
+soi:isMoralrightsHolder rdf:type owl:ObjectProperty ;
+                        rdfs:domain soi:Artist ;
+                        rdfs:range soi:ArtWork .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#isNameOf
+soi:isNameOf rdf:type owl:ObjectProperty ;
+             rdfs:domain soi:Name ;
+             rdfs:range soi:SoiEntity .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#isPublisherOf
+soi:isPublisherOf rdf:type owl:ObjectProperty ;
+                  rdfs:domain soi:Artist ;
+                  rdfs:range soi:Edition .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#isShortNameOf
+soi:isShortNameOf rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf soi:isNameOf .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#isTranslationOf
+soi:isTranslationOf rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf soi:isVersionOf ;
+                    rdfs:domain soi:Edition ;
+                    rdfs:range soi:Edition ;
+                    rdfs:comment "Do not use for \"versions\" that aren't propper translations, e.g. Wikipedia articles have versions in other languages but not translations."@en .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#isUsedAsSoftwareLibrary
+soi:isUsedAsSoftwareLibrary rdf:type owl:ObjectProperty ;
+                            rdfs:subPropertyOf soi:isCitedBy ;
+                            owl:inverseOf soi:usesSoftwareLibrary .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#isVersionOf
+soi:isVersionOf rdf:type owl:ObjectProperty ;
+                rdfs:domain soi:ArtWork ;
+                rdfs:range soi:ArtWork .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#usesSoftwareLibrary
+soi:usesSoftwareLibrary rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf soi:citesWork .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#abstract
+soi:abstract rdf:type owl:DatatypeProperty ;
+             rdfs:domain [ rdf:type owl:Class ;
+                           owl:unionOf ( soi:ArtWork
+                                         soi:Contribution
+                                       )
+                         ] ;
+             rdfs:range xsd:string .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#availableAt
+soi:availableAt rdf:type owl:DatatypeProperty ;
+                rdfs:domain soi:Exemplar ;
+                rdfs:range [ rdf:type rdfs:Datatype ;
+                             owl:unionOf ( xsd:anyURI
+                                           xsd:string
+                                         )
+                           ] .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#borrowURL
+soi:borrowURL rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf soi:availableAt ;
+              rdfs:comment "URL where the item can be borrowed either in digital or physical form."@en .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#contributionRole
+soi:contributionRole rdf:type owl:DatatypeProperty ;
+                     rdfs:domain soi:Contribution ;
+                     rdfs:range xsd:string .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#contributionRoleMARC
+soi:contributionRoleMARC rdf:type owl:DatatypeProperty ;
+                         rdfs:subPropertyOf soi:contributionRole .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#digitality
+soi:digitality rdf:type owl:DatatypeProperty ;
+               rdfs:domain soi:ArtWork ;
+               rdfs:range xsd:string ;
+               soi:recommended_values """digital
+analog
+mixed
+mostly-digital
+mostly-analog""" .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#freeURL
+soi:freeURL rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf soi:availableAt ;
+            rdfs:comment "URL where the item can be obtained free of charge."@en .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasCommonName
+soi:hasCommonName rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf soi:hasName .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasExclusiveIdentifier
+soi:hasExclusiveIdentifier rdf:type owl:DatatypeProperty ;
+                           rdfs:subPropertyOf soi:hasIdentifier ;
+                           rdfs:domain soi:SoiEntity ;
+                           rdfs:range xsd:anyURI .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasFullName
+soi:hasFullName rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf soi:hasName .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasHash
+soi:hasHash rdf:type owl:DatatypeProperty ;
+            rdfs:domain soi:Exemplar ;
+            rdfs:range xsd:string ;
+            soi:regexp "^([A-Z0-9a-z-]+:)?[0-9a-f]+$" .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasIdentifier
+soi:hasIdentifier rdf:type owl:DatatypeProperty .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasName
+soi:hasName rdf:type owl:DatatypeProperty ;
+            rdfs:range xsd:string .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasSharedIdentifier
+soi:hasSharedIdentifier rdf:type owl:DatatypeProperty ;
+                        rdfs:subPropertyOf soi:hasIdentifier ;
+                        rdfs:domain soi:SoiEntity ;
+                        rdfs:range xsd:string .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#hasShortName
+soi:hasShortName rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf soi:hasName .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#language
+soi:language rdf:type owl:DatatypeProperty ;
+             rdfs:domain soi:SoiEntity ;
+             rdfs:range xsd:string ;
+             soi:regexp "^(([A-Za-z]{2,3}(-[A-Za-z]{3}){0,3}|[A-Za-z]{4,8})(-[A-Za-z]{4})?(-[A-Za-z]{2}|-[0-9]{3})?(-[A-Za-z0-9]{5,8}|-[0-9][A-Za-z0-9]{3})*?(-[0-9A-Wa-wY-Zy-z](-[0-9A-Za-z]{2,8})+)*?(-x(-[0-9A-Za-z]{1,8})+)?|x-[0-9A-Za-z]{1,8}|i-ami|i-bnn|i-default|i-enochian|i-hak|i-klingon|i-lux|i-mingo|i-navajo|i-pwn|i-tao|i-tay|i-tsu|sgn-BE-FR|sgn-BE-NL|sgn-CH-DE|en-GB-oed)$" .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#licensingURL
+soi:licensingURL rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf soi:availableAt ;
+                 rdfs:comment "URL where the item can be licensed from the copyright holder."@en .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#pronunciation
+soi:pronunciation rdf:type owl:DatatypeProperty ;
+                  rdfs:domain soi:Name ;
+                  rdfs:range xsd:string .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#pronunciation_ipa
+soi:pronunciation_ipa rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf soi:pronunciation ;
+                      rdfs:range xsd:string ;
+                      soi:regexp "^(/.*/|\\[.*\\])$" .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#pronunciation_notes
+soi:pronunciation_notes rdf:type owl:DatatypeProperty ;
+                        rdfs:subPropertyOf soi:pronunciation ;
+                        rdfs:range [ rdf:type rdfs:Datatype ;
+                                     owl:unionOf ( xsd:anyURI
+                                                   xsd:string
+                                                 )
+                                   ] .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#publicLicense
+soi:publicLicense rdf:type owl:DatatypeProperty ;
+                  rdfs:range [ rdf:type rdfs:Datatype ;
+                               owl:unionOf ( xsd:anyURI
+                                             xsd:string
+                                           )
+                             ] ;
+                  rdfs:comment """For public domain, use \"public domain: <reason>\". Prefer SPDX whenever possible.
+
+Examples:
+
+public domain: US Goverment work (see 17 USC § 105)
+
+public domain: brazilian law (see art. 8 inc. IV of law 9.610/1998)"""@en .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#publicationDate
+soi:publicationDate rdf:type owl:DatatypeProperty ;
+                    rdfs:domain soi:Edition ;
+                    rdfs:range xsd:string ;
+                    soi:regexp "^([0-9]{4,5})-((0[0-9]|1[0-2])-([0-2][0-9]|3[0-1])|[0-9]{3}|W[0-9]{2}(-[0-6])?)(T([0-1][0-9]|2[0-3])(:([0-5][0-9])(:[0-5][0-9]|:60)?)?(Z|[+-][0-9]{2}(:[0-5][0-9])?))?$" .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#publicationPlace
+soi:publicationPlace rdf:type owl:DatatypeProperty ;
+                     rdfs:domain soi:Edition ;
+                     rdfs:range [ rdf:type rdfs:Datatype ;
+                                  owl:unionOf ( xsd:anyURI
+                                                xsd:string
+                                              )
+                                ] .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#shopURL
+soi:shopURL rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf soi:availableAt ;
+            rdfs:comment "URL where the item can be purchased."@en .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#transcription
+soi:transcription rdf:type owl:DatatypeProperty ;
+                  rdfs:domain soi:Name ;
+                  rdfs:range xsd:string .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#transcription_latin
+soi:transcription_latin rdf:type owl:DatatypeProperty ;
+                        rdfs:subPropertyOf soi:transcription .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#transcription_original
+soi:transcription_original rdf:type owl:DatatypeProperty ;
+                           rdfs:subPropertyOf soi:transcription .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#updateStyle
+soi:updateStyle rdf:type owl:DatatypeProperty ;
+                rdfs:domain soi:ArtWork ;
+                rdfs:range xsd:string ;
+                soi:recommended_values """continuous: changes are made under the same identifier (e.g. Wikipedia articles)
+editions: changes are published as new editions
+stable: changes are never made or are finished"""@en .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#version
+soi:version rdf:type owl:DatatypeProperty ;
+            rdfs:domain soi:Edition ;
+            rdfs:range xsd:string .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#webpage
+soi:webpage rdf:type owl:DatatypeProperty ;
+            rdfs:domain soi:SoiEntity ;
+            rdfs:range xsd:anyURI .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#ArtWork
+soi:ArtWork rdf:type owl:Class ;
+            rdfs:subClassOf soi:SoiEntity .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#Artist
+soi:Artist rdf:type owl:Class ;
+           rdfs:subClassOf soi:SoiEntity .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#Contribution
+soi:Contribution rdf:type owl:Class ;
+                 rdfs:subClassOf soi:SoiEntity .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#Edition
+soi:Edition rdf:type owl:Class ;
+            rdfs:subClassOf soi:ArtWork .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#Exemplar
+soi:Exemplar rdf:type owl:Class ;
+             rdfs:subClassOf soi:ArtWork .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#GroupArtist
+soi:GroupArtist rdf:type owl:Class ;
+                rdfs:subClassOf soi:Artist ;
+                owl:disjointWith soi:IndividualArtist .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#IndividualArtist
+soi:IndividualArtist rdf:type owl:Class ;
+                     rdfs:subClassOf soi:Artist .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#Name
+soi:Name rdf:type owl:Class ;
+         owl:disjointWith soi:SoiEntity .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#SoiEntity
+soi:SoiEntity rdf:type owl:Class ;
+              owl:hasKey ( soi:hasExclusiveIdentifier
+                         ) .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#WorkIdeal
+soi:WorkIdeal rdf:type owl:Class ;
+              rdfs:subClassOf soi:ArtWork ;
+              rdfs:comment """Represents the ideal of an art work accross multiple editions.
+
+Examples:
+
+- US Constitution
+- Bible"""@en .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#example_camara_br
+soi:example_camara_br rdf:type owl:NamedIndividual ,
+                               soi:GroupArtist ;
+                      soi:hasExclusiveIdentifier "urn:govid:cnpj:00530352000159"^^xsd:anyURI ;
+                      soi:webpage "http://camara.leg.br"^^xsd:anyURI .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#example_cf_88
+soi:example_cf_88 rdf:type owl:NamedIndividual ,
+                           soi:WorkIdeal .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#example_cf_88_dou
+soi:example_cf_88_dou rdf:type owl:NamedIndividual ,
+                               soi:Edition ;
+                      soi:isEditionOf soi:example_cf_88 .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#example_cf_88_dou_scan
+soi:example_cf_88_dou_scan rdf:type owl:NamedIndividual ,
+                                    soi:Exemplar ;
+                           soi:isExemplarOf soi:example_cf_88_dou ;
+                           soi:freeURL "http://www.planalto.gov.br/ccivil_03/constituicao/douconstituicao88.pdf"^^xsd:anyURI ,
+                                       "https://web.archive.org/web/20220202195342/http://www.planalto.gov.br/CCIVIL_03/CONSTITUICAO/DOUconstituicao88.pdf"^^xsd:anyURI ;
+                           soi:hasHash "SHA-1:7a8a3157daa84a0ebb774d89f2fd954d6b74fcf3"^^soi:hash_type .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#example_cf_88_ulyssis
+soi:example_cf_88_ulyssis rdf:type owl:NamedIndividual ,
+                                   soi:Contribution ;
+                          soi:hasAuthor soi:example_ulyssis_guimaraes ;
+                          soi:isContributionTo soi:example_cf_88 ;
+                          soi:contributionRole "Presidente"@pt-br ;
+                          soi:contributionRoleMARC "pbd" .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#example_cf_88_web_compilada
+soi:example_cf_88_web_compilada rdf:type owl:NamedIndividual ,
+                                         soi:Edition ;
+                                soi:isEditionOf soi:example_cf_88 ;
+                                soi:hasExclusiveIdentifier "http://www.planalto.gov.br/ccivil_03/constituicao/constituicaocompilado.htm"^^xsd:anyURI .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#example_cf_88_web_original
+soi:example_cf_88_web_original rdf:type owl:NamedIndividual ,
+                                        soi:Edition ;
+                               soi:isEditionOf soi:example_cf_88 .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#example_congresso_br_commonName
+soi:example_congresso_br_commonName rdf:type owl:NamedIndividual ,
+                                             soi:Name ;
+                                    soi:transcription_original "Congresso Nacional" .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#example_congresso_br_name
+soi:example_congresso_br_name rdf:type owl:NamedIndividual ;
+                              soi:language "pt-BR" ;
+                              soi:transcription_latin "CN" .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#example_congresso_br_shortName
+soi:example_congresso_br_shortName rdf:type owl:NamedIndividual ,
+                                            soi:Name ;
+                                   soi:language "pt-BR" ;
+                                   soi:transcription_original "CN" .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#example_dou
+soi:example_dou rdf:type owl:NamedIndividual ,
+                         soi:WorkIdeal ;
+                soi:hasPublisher soi:example_imprensa_nacional ;
+                soi:hasExclusiveIdentifier "urn:issn:1415-1537"^^xsd:anyURI ;
+                soi:hasFullName "Diário Oficial da União"@pt-br .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#example_dou_1998-10-05
+soi:example_dou_1998-10-05 rdf:type owl:NamedIndividual ,
+                                    soi:Edition ;
+                           soi:isEditionOf soi:example_dou ;
+                           soi:publicationDate "1988-10-05"^^soi:iso8601_type .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#example_imprensa_nacional
+soi:example_imprensa_nacional rdf:type owl:NamedIndividual ,
+                                       soi:GroupArtist .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#example_senado_br
+soi:example_senado_br rdf:type owl:NamedIndividual ,
+                               soi:GroupArtist ;
+                      soi:hasExclusiveIdentifier "urn:govid:br:cnpj:00530279000115"^^xsd:anyURI ;
+                      soi:webpage "http://www.senado.leg.br"^^xsd:anyURI .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#example_ulyssis_guimaraes
+soi:example_ulyssis_guimaraes rdf:type owl:NamedIndividual ,
+                                       soi:IndividualArtist ;
+                              soi:hasCommonName "Ulysses Guimarães"@pt ;
+                              soi:hasFullName "Ulysses Silveira Guimarães"@pt ;
+                              soi:webpage "https://en.wikipedia.org/wiki/Ulysses_Guimar%C3%A3es"@en .
+
+
+###  git://github.com/gjvnq/soi.git/ontology.ttl#exemple_congresso_br
+soi:exemple_congresso_br rdf:type owl:NamedIndividual ,
+                                  soi:GroupArtist ;
+                         soi:hasCommonName soi:example_congresso_br_commonName ;
+                         soi:hasMember soi:example_camara_br ,
+                                       soi:example_senado_br ;
+                         soi:hasShortName soi:example_congresso_br_shortName ;
+                         soi:webpage "http://www.congressonacional.leg.br/"^^xsd:anyURI .
+
+
+#################################################################
+#    Annotations
+#################################################################
+
+soi:hasShortName rdfs:comment """Mainly intended for acronyms used by organizations.
+
+Do not use Unicode small caps.
+
+Examples:
+
+- UN: United Nations
+- WHO: World Health Organization
+- CDC: Centers for Disease Control and Prevention
+- W3C: World Wide Web Consortium
+- Interpol: International Criminal Police Organization
+- MPFDT: Ministério Público Federal e dos Terriórios""" .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
